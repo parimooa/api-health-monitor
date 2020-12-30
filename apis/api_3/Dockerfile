@@ -14,4 +14,4 @@ WORKDIR /app/
 
 RUN poetry install --no-root --no-dev
 RUN ls
-ENTRYPOINT poetry run uvicorn api.main:app --reload --host 0.0.0.0 --port 8000
+ENTRYPOINT poetry run uvicorn api.main:app --reload --host 0.0.0.0 --port 8053

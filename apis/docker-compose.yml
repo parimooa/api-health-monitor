@@ -1,0 +1,31 @@
+version: "3.8"
+services:
+  api_1:
+    build:
+      context: api_1/
+      dockerfile: Dockerfile
+    image: api_1:latest
+    ports:
+      - 8051:8051
+  api_2:
+    build:
+      context: api_2/
+      dockerfile: Dockerfile
+    image: api_2:latest
+    ports:
+      - 8052:8052
+  api_3:
+    build:
+      context: api_3/
+      dockerfile: Dockerfile
+    image: api_3:latest
+    ports:
+      - 8053:8053
+  api_4:
+    build:
+      context: api_4/
+      dockerfile: Dockerfile
+    image: api_4:latest
+    ports:
+      - 8054:8054
+
