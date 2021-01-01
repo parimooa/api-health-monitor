@@ -6,7 +6,7 @@ import os
 from json import JSONDecodeError
 
 app = FastAPI(
-    title="WebUAS HealthCheck",
+    title="HealthCheck",
     description="Checks API health",
     version="0.1.0"
 )
@@ -19,25 +19,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-services = [
-    {"name": 'altitude', "port": '12001'},
-    {"name": 'position', "port": '12003'},
-    {"name": 'webuas_operation', "port": '12005'},
-    {"name": 'vehicle', "port": '12007'},
-    {"name": 'flight_plan', "port": '12009'},
-    {"name": 'mavlink', "port": '12010'},
-    {"name": 'airspace_data', "port": '12013'},
-]
 
 
-class WebUASServices(str, Enum):
-    altitude = 'altitude'
-    position = 'position'
-    webuas_operation = 'webuas_operation'
-    vehicle = 'vehicle'
-    flight_plan = 'flight_plan'
-    mavlink = 'mavlink'
-    airspace_data = 'airspace_data'
+class APIServices(str, Enum):
 
 
 def get_base_url():
@@ -48,7 +32,7 @@ def get_base_url():
     return base_url
 
 
-@app.get("/webuas/api/health/")
+@app.get("/api/health/")
 def get_all_api_health_status():
     api_status_list = []
     for service in services:
@@ -64,7 +48,7 @@ def get_all_api_health_status():
     return api_status_list
 
 
-@app.get("/webuas/api/health/{service}")
+@app.get("/api/health/{service}")
 async def get_api_health_status(service: WebUASServices):
     """ Get API Health Status"""
     try:
