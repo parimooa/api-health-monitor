@@ -1,0 +1,11 @@
+.*/
+.pytest_cache/
+logs/
+.gitignore
+.dockerignore
+.git/
+temp.py
+.idea/
+venv/
+devbin/
+**/__pycache__
