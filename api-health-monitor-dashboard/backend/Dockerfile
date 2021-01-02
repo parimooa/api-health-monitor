@@ -9,9 +9,9 @@ RUN curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-
 # Copy using poetry.lock* in case it doesn't exist yet
 COPY ./pyproject.toml /app/
 COPY ./poetry.lock* /app/
-COPY ./api /app/api
+COPY ./app /app/api
 WORKDIR /app/
 
 RUN poetry install --no-root --no-dev
 RUN ls
-ENTRYPOINT poetry run uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+ENTRYPOINT poetry run uvicorn api.main:app --reload --host 0.0.0.0 --port 8000
