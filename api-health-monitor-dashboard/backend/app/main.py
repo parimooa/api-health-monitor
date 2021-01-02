@@ -1,16 +1,18 @@
-from fastapi import FastAPI, Request, APIRouter
+from fastapi import Depends, FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import requests
+from functools import lru_cache
 from enum import Enum
 import os
 from json import JSONDecodeError
+from . import config
 
 app = FastAPI(
-    title="HealthCheck",
+    title="API Health Monitor",
     description="Checks API health",
     version="0.1.0"
 )
-origins = ["http://localhost:9000","http://localhost:8080"]
+origins = ["http://localhost:9000", "http://localhost:8080"]
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
@@ -20,8 +22,12 @@ app.add_middleware(
 )
 
 
+@lru_cache()
+def get_settings():
+    return config.Settings()
 
-class APIServices(str, Enum):
+
+# class APIServices(str, Enum):
 
 
 def get_base_url():
@@ -33,27 +39,27 @@ def get_base_url():
 
 
 @app.get("/api/health/")
-def get_all_api_health_status():
+def get_all_api_health_status(settings: config.Settings = Depends(get_settings)):
     api_status_list = []
-    for service in services:
+    for api in settings.target_api_urls:
         try:
-            res = requests.get(f"http://{get_base_url()}:{service['port']}/services/{service['name']}/")
+            res = requests.get(f"http://{get_base_url()}:{api['port']}/{settings.target_api_endpoint}")
             if res.status_code == 200 and res.json() is not None:
-                api_status_list.append({'name': service["name"], 'status': True})
+                api_status_list.append({'name': api["name"], 'status': True})
             else:
-                api_status_list.append({'name': service["name"], 'status': False})
+                api_status_list.append({'name': api["name"], 'status': False})
         except Exception as e:
             print(f"Exception Error: {str(e)}")
-            api_status_list.append({'name': service["name"], 'status': False})
+            api_status_list.append({'name': api["name"], 'status': False})
     return api_status_list
 
 
 @app.get("/api/health/{service}")
-async def get_api_health_status(service: WebUASServices):
+async def get_api_health_status(service: str, settings: config.Settings = Depends(get_settings)):
     """ Get API Health Status"""
     try:
-        api = next(serv for serv in services if serv['name'] == service)
-        res = requests.get(f"http://{get_base_url()}:{api['port']}/services/{service}/")
+        api = next(api for api in settings.target_api_urls if api['name'] == service)
+        res = requests.get(f"http://{get_base_url()}:{api['port']}/{settings.target_api_endpoint}")
         return res.json()
     except JSONDecodeError:
         return {'name': service, 'status': False}
