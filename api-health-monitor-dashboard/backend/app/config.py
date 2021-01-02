@@ -11,4 +11,4 @@ class Settings(BaseSettings):
         {"name": "API_4", "port": 8054}
     ]
     target_api_endpoint="healthcheck"
-    health_monitor_api_port=8000
+    health_monitor_api_port=8050
