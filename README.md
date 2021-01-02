@@ -18,3 +18,11 @@ API2 `http://localhost:8051/healthcheck`
 API3 `http://localhost:8052/healthcheck`
 
 API4 `http://localhost:8053/healthcheck`
+
+# API HEALTH MONITOR APP
+### Execute using docker
+    cd api-health-monitor-dashboard
+    docker-compose build
+    docker-compose up -d
+    
+Navigate to `http://localhost:9000` for dashboard 
