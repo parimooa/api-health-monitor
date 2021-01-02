@@ -1,0 +1,16 @@
+version: "3.8"
+services:
+  webapp:
+    build: ./frontend/api_monitor
+    image: health_monitor_frontend
+    volumes:
+       - ./frontend/api_monitor/:/app
+       - /app/node_modules
+    ports:
+      - 9000:80
+  backend:
+    build: ./backend
+    image: health_monitor_backend
+    ports:
+      - 8000:8000
+
