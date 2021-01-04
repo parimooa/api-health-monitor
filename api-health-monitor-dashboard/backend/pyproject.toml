@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "api_2"
+name = "API Health Monitor"
 version = "0.1.0"
 description = ""
 authors = ["Ashish Parimoo <ashish.parimoo@anptech.co.uk>"]
