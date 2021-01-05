@@ -11,13 +11,13 @@ Port 8050-8054
 
 ### HealthCheck Routes for API's
 
-API1 `http://localhost:8050/healthcheck`
+API1 `http://localhost:8051/healthcheck`
 
-API2 `http://localhost:8051/healthcheck`
+API2 `http://localhost:8052/healthcheck`
 
-API3 `http://localhost:8052/healthcheck`
+API3 `http://localhost:8053/healthcheck`
 
-API4 `http://localhost:8053/healthcheck`
+API4 `http://localhost:8054/healthcheck`
 
 # API HEALTH MONITOR APP
 ### Execute using docker
